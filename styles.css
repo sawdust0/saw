@@ -1,0 +1,818 @@
+:root {
+  --bg-color: #ffffff;
+  --sidebar-bg: #f0f0f0;
+  --text-color: #5c5757;
+  --accent-color: #5865f2;
+  --card-bg: #ffffff;
+  --positive-color: #57f287;
+  --negative-color: #ed4245;
+  --icon-color: #333333;
+  --h1-color: #000000;
+  --h2-color: #000000;
+  --logo-bg-light: #5865f2; /* Violet renk için */
+  --table-header-bg-light: #e0dee7; /* Light mod için table header arka plan rengi */
+  --table-header-bg-dark: #ADA9BB; /* Dark mod için table header arka plan rengi */
+ 
+  --bg-color-btn: #3f3e3e;
+  --text-color-btn: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg-color: #383544;
+  --sidebar-bg: #484554;
+  --text-color: #ffffff;
+  --accent-color: #5865f2;
+  --card-bg: #484554;
+  --positive-color: #57f287;
+  --negative-color: #ed4245;
+  --icon-color: #ffffff;
+  --h1-color: #ffffff;
+  --h2-color: #ffffff;
+  --bg-color-btn: #ffffff;
+  --text-color-btn: #333333;
+  
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--sidebar-bg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .dark-mode-toggle,
+.sidebar.collapsed nav a span {
+  display: none;
+}
+
+.logo {
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--logo-bg-light); /* Light mod için violet arka plan */
+  transition: background-color 0.3s ease; /* Geçiş efekti için */
+}
+
+[data-theme="dark"] .logo {
+  background-color: transparent; /* Dark mod için şeffaf arka plan */
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sidebar nav {
+  flex-grow: 1;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  padding: 15px 12px;
+  font-weight: normal;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+  border-radius: 8px;
+}
+
+.sidebar nav a.active {
+  color: var(--accent-color);
+}
+
+.sidebar nav a:hover {
+  background-color: #dedee26b;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: var(--negative-color);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-label {
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-inner {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggle-switch {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: var(--accent-color);
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-inner {
+  transform: translateX(24px);
+}
+
+.toggle-text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-email {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  padding: 15px;
+  border: 1px solid #4444444d;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.stat-change {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.stat-change.positive {
+  color: var(--positive-color);
+}
+
+.stat-change.negative {
+  color: var(--negative-color);
+}
+
+.news-chart-flex {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.chart-container {
+  flex: 1;
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.news-slider {
+  flex: 1;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  height: 100%; /* Yüksekliği sabit tutuyoruz */
+  width: 100%;
+}
+
+.news-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.news-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-text-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  color: white;
+  padding: 20px;
+}
+
+.news-text-container h3 {
+  margin-top: 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.news-text {
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.news-nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  transform: translateY(-50%);
+}
+
+.news-nav button {
+  background-color: white;
+  color: rgb(0, 0, 0);
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.news-nav button:hover {
+  background-color: rgb(218, 203, 203);
+}
+
+.events-history {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.events-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.filter-buttons button,
+.sort-export button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.export-btn {
+  background-color: var(--accent-color);
+  border: none;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.events-table th,
+.events-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status.completed {
+  background-color: var(--positive-color);
+  color: #000;
+}
+
+.status.in-progress {
+  background-color: #fee75c;
+  color: #000;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  margin: 15% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  background-color: #aaa;
+}
+
+.close:active{
+  transform: scale(0.9);
+  transition: transform 0.1s;
+}
+
+.close:hover,
+.close:focus {
+  background-color: #eceaea;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 10px;
+  }
+
+  .sidebar.collapsed {
+    height: 60px;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .content {
+    margin-bottom: 60px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .news-chart-flex {
+    flex-direction: column;
+  }
+
+  .events-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-buttons,
+  .sort-export {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Add icon styles */
+[class^="icon-"] {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  margin-right: 10px;
+  filter: var(--icon-filter);
+}
+
+.icon-home {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>');
+}
+.icon-calendar {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>');
+}
+.icon-users {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>');
+}
+.icon-file-text {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>');
+}
+.icon-bell {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>');
+}
+.icon-message-square {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>');
+}
+.icon-settings {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+.icon-chevron-down {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+}
+.icon-download {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>');
+}
+.icon-info {
+  background-image: url('data:image/svg+xml,<svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>');
+}
+.icon-chevron-left {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12 15 6"/></svg>');
+}
+.icon-chevron-right {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 15 12 9 6"/></svg>');
+}
+
+.slider-indicators {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.indicator {
+  width: 20px;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.indicator.active {
+  background-color: white;
+}
+
+/* Light mode için icon filtresi */
+:root {
+  --icon-filter: none;
+}
+
+/* Dark mode için icon filtresi */
+[data-theme="dark"] {
+  --icon-filter: invert(1);
+}
+
+.welcome-text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.chart-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.events-history-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.table-header {
+  background-color: var(--table-header-bg-light);
+  transition: background-color 0.3s ease;
+}
+
+[data-theme="dark"] .table-header {
+  background-color: var(--table-header-bg-dark);
+}
+
+/* Mevcut stillerin sonuna ekleyin */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  gap: 5px;
+}
+
+.page-btn {
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+}
+
+.rows-per-page select {
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+/* Icon stilleri için ekleme yapın */
+.icon-chevron-left,
+.icon-chevron-right {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 8px;
+  color: var(--text-color);
+}
+
+.close {
+  color: var(--text-color);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#modalTitle {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#modalDate {
+  font-size: 14px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+#modalDescription {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.modal-speakers {
+  margin-top: 20px;
+}
+
+.speaker-avatars {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.speaker-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: -10px;
+  border: 2px solid var(--card-bg);
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>');
+}
+
+#modalSpeakers,
+#modalAttendees {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 20px 20px 20px 20px;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  background-color: var(--bg-color-btn);
+  color: var(--text-color-btn);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.delete-btn {
+  background-color: #fa474a;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #f82a2e;
+  color: white;
+}
+
+.complete-btn {
+  background-color: #8576ff;
+  color: white;
+}
+
+.complete-btn:hover {
+  background-color: #4838f5;
+  color: white;
+}
+
+.delete-mark-btn-div {
+  display: flex;
+  gap: 10px;
+}
+
+.event-name{
+
+cursor: pointer;
+}
+
+/* Mevcut icon-info stilinin altına ekleyin */
+.icon-info {
+  position: relative;
+  cursor: help;
+}
+
+.icon-info::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.icon-info:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
